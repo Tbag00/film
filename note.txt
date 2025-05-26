@@ -1,0 +1,14 @@
+# NOTE SVILUPPO
+Note riguardo lo sviluppo del software da usare per la documentazione
+Da rispettare per avere struttura e codice omogenei
+
+File System:
+
+tuo-progetto/
+├── app/                # Codice principale (FastAPI, Node.js ecc.)
+├── backup/             # Contiene i file di backup generati (puoi ignorarli in Git)
+├── scripts/            # <--- Qui metti backup.sh, restore.sh ecc.
+├── .env.example        # File di esempio (senza credenziali reali!)
+├── README.md           # Documentazione
+├── docs/               # Manuale utente o guida
+└── requirements.txt    # Dipendenze Python (se usi FastAPI)

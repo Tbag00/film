@@ -1,0 +1,2 @@
+# Ignora i file di backup
+backup/*.sql

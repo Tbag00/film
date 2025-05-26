@@ -51,3 +51,15 @@
     Mantieni aggiornato il manuale se cambi gli endpoint.
     Includi una sezione "Prova Rapida" (quick start).
     Scrivi in tono professionale, semplice e diretto
+
+# Backup del database
+
+Lo script `backup.sh` consente di salvare una copia del database in locale. Il file generato è in formato SQL e si trova nella cartella `backup/`.
+
+## Uso
+1. Verifica di avere `pg_dump` installato
+2. Modifica `backup.sh` con le credenziali corrette
+3. Esegui:
+```bash
+chmod +x backup.sh
+./backup.sh
