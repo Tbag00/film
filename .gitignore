@@ -2,3 +2,4 @@
 backup/*.sql
 authserver/.env
 authserver/__pycache__
+.venv
