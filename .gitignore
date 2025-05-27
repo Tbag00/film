@@ -1,2 +1,4 @@
 # Ignora i file di backup
 backup/*.sql
+authserver/.env
+authserver/__pycache__

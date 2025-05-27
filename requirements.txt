@@ -1,1 +1,9 @@
 # Dipendenze Python
+fastapi 
+uvicorn 
+python-jose[cryptography] 
+passlib[bcrypt] 
+mysql-connector-python
+os
+dotenv
+
