@@ -14,7 +14,6 @@ router.use((req, res, next) => {
   next();
 });
 
-
 router.post('/api/login', login);
 
 //prima di entrare in /private, verifica autenticazione
@@ -31,8 +30,5 @@ router.get('/private/admin.html', (req, res) => {
 router.get('/private/user.html', (req, res) => {
     console.log("[DEBUG] User type:", req.user.type);
     res.sendFile(__dirname + '/private/user.html');
-});
-router.get('/private/style.css', (req, res) => {
-    res.sendFile(__dirname + '/private/style.css');
 });
 module.exports = router;

@@ -1,4 +1,0 @@
-node-fetch
-express
-cookie-parser
-axios
