@@ -11,7 +11,7 @@ async function login(username, password) {
         }
         else {
             user = users[0]; 
-            return { success: true, user: { id: user.id, username: user.username } };
+            return { success: true, user: { id: user.id, username: user.username , type: user.type} };
         }
     } catch (err) {
         console.error("Database error during login", err);

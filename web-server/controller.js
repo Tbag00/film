@@ -11,6 +11,7 @@ async function login(req, res) {
         console.log("Auth response:", auth_response.data);
 
         const token = auth_response.data.token;
+        console.log("Ricevuto token:", token);
         res.cookie('token', token, {
             httpOnly: true, // Prevents client-side JavaScript from accessing the cookie
             secure: process.env.NODE_ENV === 'production', // Use secure cookies in production

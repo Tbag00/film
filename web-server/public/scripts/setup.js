@@ -20,6 +20,9 @@ function showSuccess(message) {
 if(params.get("logout") == 1) {
     showSuccess("Logout successful");
 }
+if(params.get("error") == 1) {
+    showError("Invalid username or password");
+}
 
 form.addEventListener("submit", async (event) => {
     event.preventDefault()

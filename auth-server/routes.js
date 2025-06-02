@@ -3,11 +3,13 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const express = require('express');
 const router = express.Router();
-const {login} = require('./auth-controller');
+const { login } = require('./auth-controller');
+const authenticate = require('./authenticate');
 
 router.post('/api/login', async (req, res) => {
     const {username, password} = req.body;
     console.log(`ricevuto utente ${username} e password ${password}`);
+    console.log(process.env.JWT_SECRET); 
 
     if(!username || !password) {
         console.log("Missing username or password for login");
@@ -16,18 +18,15 @@ router.post('/api/login', async (req, res) => {
     try {
         const result = await login(username, password);
         if(result.success) {
-            token = jwt.sign(result.user, process.env.JWT_SECRET, {
+
+            // token contiene id, username e type dell'utente
+            const token = jwt.sign(result.user, process.env.JWT_SECRET, {
                 algorithm: "HS256",
                 expiresIn: "20m"
             })
-            res.cookie("token", token, {
-                httpOnly: true,
-                secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
-                maxAge: 20 * 60 * 1000 // 20 minutes
-            })
             message = `${username} logged successfully`;
             console.log(message);
-            return res.status(200).json({ success: true, message });
+            return res.status(200).json({ success: true, token });
         }
         else {
             console.log("Login failed: " + result.message);
@@ -38,6 +37,13 @@ router.post('/api/login', async (req, res) => {
         console.error("Error during login", err);
         return res.status(500).json({ error: "Internal server error" });
     }
+});
+router.post('/api/verify-token', authenticate, (req, res) => {
+    // Se il middleware ha passato il controllo, l'utente è autenticato
+    return res.status(200).json({
+        valid: true,
+        user: req.user // L'utente è già stato aggiunto da verify_auth
+    });
 });
 
 module.exports = router;
