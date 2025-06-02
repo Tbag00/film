@@ -18,9 +18,19 @@ async function login(req, res) {
         });
         return res.status(200).json({ message: "Login effettuato" });
     }
-    catch (err) {
-        console.error("Login error:", err);
-        return res.status(401).json({ error: "Credenziali non valide" });
+    catch (error) {
+        if (error.response) {
+            // La risposta è arrivata dal server con uno status diverso da 2xx
+            console.error("Errore dall' auth-server:", error.response.data.message);
+            return res.status(401).json({ error: "Credenziali non valide" });
+        } else if (error.request) {
+            // La richiesta è partita ma non ha ricevuto risposta
+            console.error('Nessuna risposta dal server:', error.request);
+        } else {
+            // Altro errore
+            console.error('Errore:', error.message);
+        }
+        return res.status(500).json({ error: "Errore interno del server" });
     }
 }
 module.exports = { login };

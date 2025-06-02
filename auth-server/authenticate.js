@@ -1,4 +1,5 @@
 //middleware da usare in auth.js per controllare validità dei token
+require('dotenv').config();
 const jwt = require('jsonwebtoken');
 function autenticate(req, res, next) {
     // Web server controlla già presenza token in cookie
@@ -6,10 +7,7 @@ function autenticate(req, res, next) {
 
     const token = req.cookies.token;
     try {
-        try {
-            const payload = jwt.verify(token, SECRET);
-            req.valid = true;
-        }
+        const payload = jwt.verify(token, JWT_SECRET);
+        
     }
-
 }

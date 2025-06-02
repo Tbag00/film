@@ -1,9 +1,11 @@
 const express = require('express');
-const router = express.Router();
+const routes = require('./routes.js');
+require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 4000;
 app.use(express.json());
+app.use('/', routes);
 
 app.post('/api/verify-token', async (req, res) => {
     return res.status(200).json({
@@ -15,11 +17,7 @@ app.post('/api/verify-token', async (req, res) => {
         }
     });
 })
-app.post('/api/login', async (req, res) => {
-    return res.status(200).json({
-        token: "testtoken1234567890"
-    });
-});
+
 
 app.listen(port, () => {
     console.log(`Auth server running on port ${port}`);
