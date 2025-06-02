@@ -1,9 +1,9 @@
 # Ignora i file di backup
 backup/*.sql
 # Ignora i file di configurazione
-authserver/.env
-authserver/__pycache__
-authserver/node_modules
+auth-server/.env
+auth-server/__pycache__
+auth-server/node_modules
 web-server/.env
 web-server/__pycache__
 web-server/node_modules
