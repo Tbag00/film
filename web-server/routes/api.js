@@ -21,7 +21,7 @@ router.get('/purchases/:id', movieQueryHandler('SELECT seats FROM purchases wher
 router.post('/login', login);
 router.post('/logout', logout);
 router.post('/create-user', create_user);
-router.post("/me", verify_auth, (req, res) => {
+router.get("/me", verify_auth, (req, res) => {
     res.json({ id: req.user.id, username: req.user.username, type: req.user.type });
 });
 

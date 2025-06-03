@@ -21,6 +21,31 @@ body {
     align-items: center;
 }
 
+/* Home button styling */
+.home-button {
+    position: fixed;
+    top: 24px;
+    left: 24px;
+    background: var(--form-bg);
+    color: var(--primary);
+    border: 2px solid var(--primary);
+    border-radius: 50px;
+    padding: 10px 24px;
+    font-size: 1rem;
+    font-family: inherit;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(124, 92, 54, 0.10);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border 0.2s;
+    z-index: 1000;
+}
+
+.home-button:hover {
+    background: var(--accent);
+    color: var(--text-main);
+    border-color: var(--accent);
+}
+
 .container {
     width: 100%;
     max-width: 600px;
@@ -101,5 +126,11 @@ input[type="submit"]:hover {
     .container {
         max-width: 95vw;
         padding: 16px 6vw;
+    }
+    .home-button {
+        top: 12px;
+        left: 12px;
+        padding: 8px 16px;
+        font-size: 0.95rem;
     }
 }
