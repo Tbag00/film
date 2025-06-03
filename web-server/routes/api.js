@@ -2,7 +2,7 @@ const express = require('express');
 const mysql = require('mysql2/promise');
 const router = express.Router();
 const { dbConfig } = require('../init-db');
-const { login , verify_auth, movieQueryHandler, logout} = require('../controller');
+const { login , verify_auth, movieQueryHandler, logout, create_user} = require('../controller');
 
 // Logging middleware
 router.use((req, res, next) => {
@@ -20,6 +20,7 @@ router.get('/purchases/:id', movieQueryHandler('SELECT seats FROM purchases wher
 
 router.post('/login', login);
 router.get('/logout', logout);
+router.post('/create-user', create_user);
 
 //prima di entrare in /private, verifica autenticazione
 router.use('/private', verify_auth);

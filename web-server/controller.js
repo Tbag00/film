@@ -154,4 +154,4 @@ async function create_user(req, res) {
         return res.status(500).json({ success: false, message: "Internal server error" });
     }
 }
-module.exports = { login, verify_auth, verify_manager_role, movieQueryHandler, logout};
+module.exports = { login, verify_auth, verify_manager_role, movieQueryHandler, logout, create_user};
