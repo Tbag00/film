@@ -6,14 +6,15 @@ const mysql = require('mysql2/promise');
 function movieQueryHandler(query, byId = false) {
   return async (req, res) => {
     try {
+      console.log(`[DEBUG] Esecuzione query: ${query} con id: ${req.params.id}`);
       const db = await mysql.createConnection(dbConfig);
       const params = byId ? [req.params.id] : [];
       const [rows] = await db.query(query, params);
       await db.end();
 
-      if (byId && rows.length === 0)
-        return res.status(404).json({ error: 'Elemento non trovato' });
-
+      console.log(`Query eseguita: ${query} con parametri: ${params}`);
+      console.log(`Risultato: ${rows.length} righe trovate`);
+      console.log(rows);
       res.json(rows);
     } catch (err) {
       console.error(err);

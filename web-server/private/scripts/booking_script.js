@@ -25,7 +25,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     btn.textContent = 'Acquista';
 
     btn.addEventListener('click', () => {
-        window.location.href = `/seats_choice.html?id=${s.id}`;
+        window.location.href = `/private/seats_choice.html?id=${s.id}`;
     });
 
     const timeStr = new Date(s.timecode).toLocaleTimeString();
@@ -61,9 +61,8 @@ filmSelect.addEventListener('change', async () => {
         month: '2-digit',
         year: 'numeric'
     });
-
     btn.addEventListener('click', () => {
-        window.location.href = `/seats_choice.html?id=${s.id}`;
+        window.location.href = `/private/seats_choice.html?id=${s.id}`;
     });
 
     label.append(`Spettacolo delle: ${timeStr} - ${dateStr}`);

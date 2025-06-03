@@ -52,6 +52,7 @@ document.getElementById('purchaseBtn').addEventListener('click', async () => {
 
   const response = await fetch(`/api/purchases/${id}`);
   const data = await response.json();
+  console.log("[DEBUG] Purchases data:", data);
   const takenSeats = data.map(s => s.seats);
   const stringArray = Array.from(selectedSeats, num => num.toString());
 

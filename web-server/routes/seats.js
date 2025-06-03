@@ -9,6 +9,10 @@ router.post('/confirm', async (req, res) => {
   const [rows] = await db.query('SELECT * FROM screenings WHERE id = ?', [id_projection]);
   if (rows.length === 0) return res.status(404).end();
 
+  console.log(`[DEBUG] Acquisto per proiezione ${id_projection} da utente ${user_id} per posti: ${seats.join(',')}`);
+  console.log(`[DEBUG] Stato posti prima dell'acquisto: ${rows[0].seats}`);
+  console.log(`[DEBUG] rows, seats, user_id`, rows, seats, user_id);
+
   const current = rows[0];
   let seatString = current.seats;
   seats.forEach(i => {
