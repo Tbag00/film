@@ -1,12 +1,13 @@
 const express = require('express');
 const routes = require('./routes.js');
-const { init_database } = require('./db.js'); 
+const { init_database, waitForDb } = require('./db.js'); 
 require('dotenv').config();
 
 const port = process.env.PORT || 4000;
 
 async function main() {
     try {
+        await waitForDb();
         await init_database();
     } catch (err) {
         console.error('Errore inizializzazione DB:', err);

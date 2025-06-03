@@ -9,6 +9,29 @@ const dbConfig = {
   port: process.env.PORT
 };
 
+async function waitForDb(maxRetries = 10, delayMs = 1000) {
+  let retries = 0;
+  while (retries < maxRetries) {
+    try {
+      const connection = await mysql.createConnection({
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_NAME,
+        port: process.env.DB_PORT,
+      });
+      await connection.end();
+      console.log('DB is ready');
+      return;
+    } catch (err) {
+      retries++;
+      console.log(`DB not ready yet, retrying (${retries}/${maxRetries})...`);
+      await new Promise(res => setTimeout(res, delayMs));
+    }
+  }
+  throw new Error('DB connection failed after max retries');
+}
+
 async function initDatabase() {
   console.log('Inizializzazione del database...');
   const connection = await mysql.createConnection({
@@ -68,4 +91,4 @@ async function initDatabase() {
   `);
 }
 
-module.exports = { initDatabase, dbConfig };
+module.exports = { initDatabase, dbConfig, waitForDb };

@@ -1,11 +1,54 @@
 services:
+  auth-db:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: pretore  # cambiala tu!
+      MYSQL_DATABASE: ${AUTH_DB_NAME}
+      MYSQL_USER: ${AUTH_DB_USER}
+      MYSQL_PASSWORD: ${AUTH_DB_PASSWORD}
+    ports:
+      - "3307:3306"   # mappa porta esterna 3307 a 3306 container (opzionale)
+    volumes:
+      - auth-db-data:/var/lib/mysql
+
   auth-server:
     build: ./auth-server
     ports:
       - "4000:4000"
+    depends_on:
+      - auth-db
+    environment:
+      DB_HOST: auth-db
+      DB_PORT: 3306
+      DB_USER: ${AUTH_DB_USER}
+      DB_PASSWORD: ${AUTH_DB_PASSWORD}
+      DB_NAME: ${AUTH_DB_NAME}
+
+  web-db:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password_web  # cambiala tu!
+      MYSQL_DATABASE: ${WEB_DB_NAME}
+      MYSQL_USER: ${WEB_DB_USER}
+      MYSQL_PASSWORD: ${WEB_DB_PASSWORD}
+    ports:
+      - "3308:3306"
+    volumes:
+      - web-db-data:/var/lib/mysql
+
   web-server:
     build: ./web-server
     ports:
       - "3000:3000"
     depends_on:
-      - auth-server
+      - web-db
+    environment:
+      DB_HOST: web-db
+      DB_PORT: 3306
+      DB_USER: ${WEB_DB_USER}
+      DB_PASSWORD: ${WEB_DB_PASSWORD}
+      DB_NAME: ${WEB_DB_NAME}
+
+volumes:
+  auth-db-data:
+  web-db-data:

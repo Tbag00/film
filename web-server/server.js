@@ -10,7 +10,7 @@ const seatsRouter = require('./routes/seats');
 const apiRouter = require('./routes/api');
 
 require('dotenv').config();
-const { initDatabase, dbConfig } = require('./init-db');
+const { initDatabase, dbConfig, waitForDb } = require('./init-db');
 const { verify } = require('crypto');
 const { verify_auth, verify_manager_role } = require('./controller');
 
@@ -19,6 +19,7 @@ const app = express();
 
 async function main() {
     try {
+        await waitForDb();
         await initDatabase();
     } catch (err) {
     console.error('Errore inizializzazione DB:', err);
