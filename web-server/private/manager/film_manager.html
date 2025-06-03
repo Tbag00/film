@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gestione Film</title>
+</head>
+<body>
+  <h1>Gestione Film</h1>
+
+  <h2>Aggiungi Film</h2>
+  <form action="/films" method="POST">
+    <label>Nome Film: <input type="text" name="name" required /></label><br />
+    <label>Durata: <input type="number" name="duration" required /></label><br />
+    <button type="submit">Aggiungi</button>
+  </form>
+
+  <div id="msgBox" class="error"></div>
+  <div id="msgBox" class="success"></div>
+
+  <h2>Rimuovi Film</h2>
+  <form action="/films/delete" method="POST">
+    <label>Nome Film: <select name="name" id="filmSelect" placeholder="Titolo" required></select>
+    <button type="submit">Rimuovi</button>
+  </form>
+
+  <script src="scripts/film_script.js"></script>
+</body>
+</html>

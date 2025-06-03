@@ -11,6 +11,8 @@ const apiRouter = require('./routes/api');
 
 require('dotenv').config();
 const { initDatabase, dbConfig } = require('./init-db');
+const { verify } = require('crypto');
+const { verify_auth, verify_manager_role } = require('./controller');
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -31,6 +33,20 @@ async function main() {
     app.use('/screenings', screeningRouter);
     app.use('/booking', bookingRouter);
     app.use('/seats', seatsRouter);
+    app.use('/private', verify_auth, express.static("private"));   // Middleware to verify authentication for private routes
+
+    app.use(
+        '/private/manager',
+        verify_auth,
+        verify_manager_role,
+        express.static('private/manager')
+    );
+
+    app.use(
+        '/private',
+        verify_auth,
+        express.static('private')
+    );
 
     app.get('/', (req, res) => {
         res.sendFile(path.join(__dirname, 'public', 'index.html'));

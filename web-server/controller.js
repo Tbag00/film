@@ -22,7 +22,6 @@ function movieQueryHandler(query, byId = false) {
   };
 }
 
-
 async function login(req, res) {
     try {
         const {username, password} = req.body;
@@ -123,4 +122,11 @@ async function verify_auth(req, res, next) {
     }
 }
 
-module.exports = { login, verify_auth, movieQueryHandler, logout};
+async function verify_manager_role(req, res, next) {
+    if (!req.user || req.user.type !== 'admin') {
+        console.log("Accesso negato: utente non autorizzato");
+        return res.status(403).json({ error: "Accesso negato: utente non autorizzato" });
+    }
+    next();
+}
+module.exports = { login, verify_auth, verify_manager_role, movieQueryHandler, logout};

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gestione Sale Cinema</title>
+</head>
+<body>
+  <h1>Gestione Sale</h1>
+
+  <h2>Aggiungi Sala</h2>
+  <form action="/rooms" method="POST">
+    <label>Nome Sala: <input type="text" name="name" required /></label><br />
+    <label>Numero Posti: <input type="number" name="seats" required /></label><br />
+    <button type="submit">Aggiungi</button>
+  </form>
+
+  <div id="msgBox" class="error"></div>
+  <div id="msgBox" class="success"></div>
+
+  <h2>Rimuovi Sala</h2>
+  <form action="/rooms/delete" method="POST">
+    <label>Nome Sala: 
+      <select name="name" id="roomSelect" placeholder="Sala" required></select>
+      <button type="submit">Rimuovi</button>
+      </label><br />
+  </form>
+
+  <script src="scripts/room_script.js"></script>
+</body>
+</html>

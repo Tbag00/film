@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cinema Get-Modernissimo</title>
+</head>
+<body>
+    <h1>Cosa ti va di guardare?</h1>
+    <div id="msgBox" class="error"></div>
+    <div id="msgBox" class="success"></div>
+
+    <h2>Oggi al cinema:</h2>
+    <form action="/booking/purchase" method="PUT">
+        <div id="todayList"></div>
+    </form>
+
+    <h2>Scegli il film che desideri:</h2>
+    <label>Nome Film: 
+        <select name="title" id="filmSelect" required></select>
+    </label><br />
+    <div id="screeningList"></div>
+
+    <script src="scripts/booking_script.js"></script>
+</body>
+</html>
