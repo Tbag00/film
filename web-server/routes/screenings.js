@@ -38,7 +38,9 @@ router.post('/', async (req, res) => {
       return res.redirect('/private/manager/screening_manager.html?error=conflitto');
     }
 
-    await db.query('INSERT INTO screenings (id_movie, id_room, available_seats , timecode) VALUES (?, ?, ?, ?)', [film_id[0].id, room_id[0].id, parseInt(seats[0].seats), date]);
+    await db.query('INSERT INTO screenings (id_movie, id_room, available_seats, timecode) VALUES (?, ?, ?, ?)', [film_id[0].id, room_id[0].id, parseInt(seats[0].seats), date]);
+    const zeroSeats = '0'.repeat(parseInt(seats[0].seats));
+    await db.query('INSERT INTO screenings (seats) VALUES (?)', [zeroSeats]);
     await db.end();
     return res.redirect('/private/manager/screening_manager.html?success=aggiunta');
   } catch (err) {
