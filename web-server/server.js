@@ -25,8 +25,10 @@ async function main() {
   }
     app.use(express.json());
     app.use(cookieParser());
+    app.use(express.urlencoded({ extended: true }));    // Per le POST nei form HTML
 
     app.use(express.static('public'));
+    app.use('/style', express.static('style'));
     app.use('/api', apiRouter);
     app.use('/rooms', roomsRouter);
     app.use('/films', filmsRouter);
@@ -66,6 +68,10 @@ async function main() {
 
     app.get('/booking', (req, res) => {
         res.sendFile(path.join(__dirname, 'public', 'booking_manager.html'));
+    });
+
+    app.use((req, res) => {
+        res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
     });
 
     app.listen(port, () => {

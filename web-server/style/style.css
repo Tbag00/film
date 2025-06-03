@@ -1,0 +1,105 @@
+/* Palette: warm beige, light brown, cream, dark brown, accent gold */
+:root {
+    --bg-main: #f5ecd7;
+    --bg-secondary: #e2c9a0;
+    --form-bg: #fffaf3;
+    --primary: #a67c52;
+    --secondary: #7c5c36;
+    --accent: #d4af37;
+    --text-main: #3e2c18;
+    --button-hover: #d4af37;
+}
+
+body {
+    background: var(--bg-main);
+    color: var(--text-main);
+    font-family: 'Georgia', 'Times New Roman', serif;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
+    margin: 40px auto;
+    background: var(--form-bg);
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(166, 124, 82, 0.08);
+    padding: 32px 24px;
+}
+
+h1, h2, h3 {
+    color: var(--primary);
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 6px;
+    color: var(--secondary);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+select,
+textarea {
+    padding: 10px 12px;
+    border: 1px solid var(--bg-secondary);
+    border-radius: 6px;
+    background: #fff;
+    font-size: 1rem;
+    color: var(--text-main);
+    transition: border 0.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--primary);
+    outline: none;
+}
+
+button,
+input[type="submit"] {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(124, 92, 54, 0.08);
+}
+
+button:hover,
+input[type="submit"]:hover {
+    background: var(--button-hover);
+    color: var(--text-main);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+}
+
+@media (max-width: 700px) {
+    .container {
+        max-width: 95vw;
+        padding: 16px 6vw;
+    }
+}

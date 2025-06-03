@@ -7,7 +7,7 @@ router.post('/', async (req, res) => {
   const { title, room, date } = req.body;
   const lowerTitle = title.toUpperCase();
   const lowerRoom = room.toUpperCase();
-  if (!lowerTitle || !lowerRoom || !date) return res.redirect('/screening_manager.html?error=campi_obbligatori');
+  if (!lowerTitle || !lowerRoom || !date) return res.redirect('/private/manager/screening_manager.html?error=campi_obbligatori');
 
   try {
     const db = await mysql.createConnection(dbConfig);
@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
     const [rows] = await db.query('SELECT * FROM screenings WHERE id_movie = ? AND id_room = ? AND timecode = ?', [film_id[0].id, room_id[0].id, date]); 
     if (rows.length > 0) {
       await db.end();
-      return res.redirect('/screening_manager.html?error=proiezione_esistente');
+      return res.redirect('/private/manager/screening_manager.html?error=proiezione_esistente');
     }
 
     const [existing] = await db.query(`SELECT s.timecode, m.duration FROM screenings s JOIN movies m ON s.id_movie = m.id WHERE s.id_room = ?`, [room_id[0].id]);
@@ -35,28 +35,28 @@ router.post('/', async (req, res) => {
     });
 
     if (overlap) {
-      return res.redirect('/screening_manager.html?error=conflitto');
+      return res.redirect('/private/manager/screening_manager.html?error=conflitto');
     }
 
     await db.query('INSERT INTO screenings (id_movie, id_room, available_seats , timecode) VALUES (?, ?, ?, ?)', [film_id[0].id, room_id[0].id, parseInt(seats[0].seats), date]);
     await db.end();
-    return res.redirect('/screening_manager.html?success=aggiunta');
+    return res.redirect('/private/manager/screening_manager.html?success=aggiunta');
   } catch (err) {
     console.error(err);
-    return res.redirect('/screening_manager.html?error=errore_db');
+    return res.redirect('/private/manager/screening_manager.html?error=errore_db');
   }
 });
 
 router.post('/delete', async (req, res) => {
   const ids = req.body['screenings[]'] || req.body.screenings;
-  if (!ids) return res.redirect('/screening_manager.html?error=campi_obbligatori');
+  if (!ids) return res.redirect('/private/manager/screening_manager.html?error=campi_obbligatori');
 
   try {
     const db = await mysql.createConnection(dbConfig);
     const [rows] = await db.query('SELECT * FROM screenings WHERE id IN (?)', [ids]); 
     if (rows.length !== ids.length) {
       await db.end();
-      return res.redirect('/screening_manager.html?error=non_trovata');
+      return res.redirect('/private/manager/screening_manager.html?error=non_trovata');
     }
 
     const toDelete = Array.isArray(ids) ? ids : [ids];
@@ -64,10 +64,10 @@ router.post('/delete', async (req, res) => {
       await db.query('DELETE FROM screenings WHERE id = ?', [id]);
     }
     await db.end();
-    return res.redirect('/screening_manager.html?success=rimossa');
+    return res.redirect('/private/manager/screening_manager.html?success=rimossa');
   } catch (err) {
     console.error(err);
-    return res.redirect('/screening_manager.html?error=errore_db');
+    return res.redirect('/private/manager/screening_manager.html?error=errore_db');
   }
 });
 
