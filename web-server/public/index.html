@@ -6,6 +6,71 @@
     <title>FILM</title>
     <link href="/style/style.css" rel="stylesheet">
     <style>
+        body {
+            display: grid;
+            grid-template-areas:
+                "header header"
+                "feedback feedback"
+                "manager user"
+                "login register"
+                "logout logout";
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto 1fr auto auto;
+            gap: 24px;
+            min-height: 100vh;
+            padding: 32px;
+            box-sizing: border-box;
+        }
+        h1 {
+            grid-area: header;
+            margin-bottom: 0;
+        }
+        #feedback-container {
+            grid-area: feedback;
+        }
+        #manager-container {
+            grid-area: manager;
+        }
+        #user-container {
+            grid-area: user;
+        }
+        .login-container {
+            grid-area: login;
+        }
+        .register-container {
+            grid-area: register;
+        }
+        .logout-container {
+            grid-area: logout;
+        }
+        #manager-container,
+        #user-container,
+        .login-container,
+        .register-container,
+        .logout-container,
+        #feedback-container {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            padding: 20px;
+        }
+        @media (max-width: 900px) {
+            body {
+                grid-template-areas:
+                    "header"
+                    "feedback"
+                    "manager"
+                    "user"
+                    "login"
+                    "register"
+                    "logout";
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(7, auto);
+                padding: 12px;
+            }
+        }
+    </style>
+    <style>
         #manager-container form,
         #user-container form {
             margin-bottom: 16px;
@@ -72,7 +137,7 @@
                 <label for="register-type">Tipo di utente</label>
                 <select id="register-type" name="type" required>
                     <option value="user">Utente</option>
-                    <option value="manager">Manager</option>
+                    <option value="admin">Admin</option>
                 </select>
             </div>
             <button type="submit">Registrati</button>

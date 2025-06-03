@@ -15,6 +15,9 @@ const register_username = document.getElementById("register-username");
 const register_password = document.getElementById("register-password");
 const register_type = document.getElementById("register-type");
 
+// Logout handling
+const logout_form = document.getElementById("logout-form");
+
 function showError(error) {
     feedback_paragraph.textContent = error;
     console.log(error);
@@ -64,5 +67,21 @@ register_form.addEventListener("submit", async (event) => {
         showError(data.error);
     } else if (data.success) {
         showSuccess("User created successfully");
+    }
+});
+
+logout_form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const res = await fetch("/api/logout", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    });
+    if(res.ok) {
+        window.location.href = "/?logout=1";
+    } else {
+        showError("Logout failed");
     }
 });

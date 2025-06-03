@@ -18,14 +18,20 @@ router.post('/api/login', async (req, res) => {
         const result = await login(username, password);
         if(result.success) {
 
+            const payload = {
+                id: result.user.id,
+                username: result.user.username,
+                type: result.user.type
+            };
+
             // token contiene id, username e type dell'utente
-            const token = jwt.sign(result.user, process.env.JWT_SECRET, {
+            const token = jwt.sign(payload, process.env.JWT_SECRET, {
                 algorithm: "HS256",
                 expiresIn: "20m"
             })
             message = `${username} logged successfully`;
             console.log(message);
-            return res.status(200).json({ success: true, token });
+            return res.status(200).json({ success: true, token, message: message });
         }
         else {
             console.log("Login failed: " + result.message);

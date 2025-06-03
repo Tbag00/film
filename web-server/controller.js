@@ -123,6 +123,7 @@ async function verify_auth(req, res, next) {
 
 async function verify_manager_role(req, res, next) {
     if (!req.user || req.user.type !== 'admin') {
+        console.log("[DEBUG] ruolo:", req.user.type);
         console.log("Accesso negato: utente non autorizzato");
         return res.status(403).json({ error: "Accesso negato: utente non autorizzato" });
     }

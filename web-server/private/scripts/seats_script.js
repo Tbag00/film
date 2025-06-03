@@ -1,6 +1,26 @@
 const id = new URLSearchParams(location.search).get('id');
 let selectedSeats = [];
 
+async function getUserId() {
+    try {
+        const response = await fetch("/me", {
+            credentials: "include" 
+        });
+        if (!response.ok) {
+            throw new Error("Errore nel recupero dell'utente");
+        }
+
+        const user = await response.json();
+        const userId = user.id;
+
+        console.log("User ID:", userId);
+        return userId;
+    } catch (error) {
+        console.error("Errore nel fetch:", error);
+        return null;
+    }
+}
+
 async function loadSeats() {
   const arr = await fetch(`/api/seats/${id}`).then(r => r.json());
   const data = arr[0];
@@ -55,6 +75,7 @@ document.getElementById('purchaseBtn').addEventListener('click', async () => {
   console.log("[DEBUG] Purchases data:", data);
   const takenSeats = data.map(s => s.seats);
   const stringArray = Array.from(selectedSeats, num => num.toString());
+  const userId = await getUserId();
 
   const hasOverlap = stringArray.some(el => takenSeats.includes(el));
 
@@ -69,7 +90,7 @@ document.getElementById('purchaseBtn').addEventListener('click', async () => {
     body: JSON.stringify({
       id_projection: id,
       seats: selectedSeats,
-      user_id: 'fakeUser',
+      user_id: userId
     })
   });
 

@@ -19,23 +19,15 @@ router.get('/seats/:id', movieQueryHandler('SELECT * FROM screenings WHERE id = 
 router.get('/purchases/:id', movieQueryHandler('SELECT seats FROM purchases where id_projection = ?', true));
 
 router.post('/login', login);
-router.get('/logout', logout);
+router.post('/logout', logout);
 router.post('/create-user', create_user);
+router.post("/me", verify_auth, (req, res) => {
+    res.json({ id: req.user.id, username: req.user.username, type: req.user.type });
+});
 
 //prima di entrare in /private, verifica autenticazione
 router.use('/private', verify_auth);
 
 // Tutte le pagine private devono avere una rotta con router.get altrimenti non saranno accessibili
-router.get('/private/admin.html', (req, res) => {
-    console.log("[DEBUG] User type:", req.user.type);
-    if (req.user.type !== 'admin') {
-        return res.status(403).send("Accesso negato");
-    }
-    res.sendFile(__dirname + '/private/admin.html');
-});
-router.get('/private/user.html', (req, res) => {
-    console.log("[DEBUG] User type:", req.user.type);
-    res.sendFile(__dirname + '/private/user.html');
-});
 
 module.exports = router;
