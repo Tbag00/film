@@ -26,8 +26,7 @@ async function login(req, res) {
     try {
         const {username, password} = req.body;
         console.log(`ricevuto utente ${username} e password ${password}`);
-        const auth_response = await axios.post('http://localhost:4000/api/login', {
-        // const auth_response = await axios.post('http://auth:4000/api/login', {
+        const auth_response = await axios.post('http://auth:4000/api/login', {
             username,
             password
         });
@@ -85,8 +84,7 @@ async function verify_auth(req, res, next) {
     console.log("Ricevuto token:", token);
     console.log(req.cookies);
         try {
-            const auth_response = await axios.post("http://localhost:4000/api/verify-token", {
-            //const auth_response = await axios("http://auth:4000/api/verify-token", {
+            const auth_response = await axios.post("http://auth:4000/api/verify-token", {
                 token: req.cookies.token,
                 withCredentials: true
             });
