@@ -3,13 +3,12 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const express = require('express');
 const router = express.Router();
-const { login } = require('./auth-controller');
+const { login, create_user } = require('./auth-controller');
 const authenticate = require('./authenticate');
 
 router.post('/api/login', async (req, res) => {
     const {username, password} = req.body;
     console.log(`ricevuto utente ${username} e password ${password}`);
-    console.log(process.env.JWT_SECRET); 
 
     if(!username || !password) {
         console.log("Missing username or password for login");
@@ -46,4 +45,5 @@ router.post('/api/verify-token', authenticate, (req, res) => {
     });
 });
 
+router.post('/api/create-user', create_user);
 module.exports = router;

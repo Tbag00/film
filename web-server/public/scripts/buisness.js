@@ -18,3 +18,21 @@ export async function login(user, password) {
         console.error("Error during login:", error);
     }
 }
+export async function createUser(username, password, type) {
+    try {
+        const response = await fetch('/api/create-user', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password, type })
+        });
+
+        const data = await response.json();
+        return data;
+    }
+    catch (error) {
+        console.error("Error creating user:", error);
+        return { success: false, message: "Internal server error" };
+    }
+}

@@ -22,7 +22,7 @@ async function waitForDb(maxRetries = 100, delayMs = 1000) {
   while (retries < maxRetries) {
     try {
       console.log(process.env.DB_HOST, process.env.DB_USER, process.env.DB_PASSWORD, process.env.DB_NAME, process.env.DB_PORT);
-      const connection = await mysql.createConnection({
+      const connection = await sql.createConnection({
         host: process.env.DB_HOST,
         user: process.env.DB_USER,
         password: process.env.DB_PASSWORD,
@@ -34,6 +34,7 @@ async function waitForDb(maxRetries = 100, delayMs = 1000) {
       return;
     } catch (err) {
       retries++;
+      console.error('DB connection error:', err.message);
       console.log(`DB not ready yet, retrying (${retries}/${maxRetries})...`);
       await new Promise(res => setTimeout(res, delayMs));
     }

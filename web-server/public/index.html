@@ -15,6 +15,10 @@
 </head>
 <body>
     <h1>FILM: Film Is a Light Manager</h1>
+    <div id="feedback-container">
+        <h2>Feedback</h2>
+        <p id="feedback"></p>
+    </div>
     <div id="manager-container">
         <h2>Azioni Admin</h2>
         <form action="/private/manager/room_manager.html" method="GET">
@@ -52,10 +56,33 @@
             </div>
             <button type="submit">Accedi</button>
         </form>
-        <div id="feedback-container">
-            <h2>Feedback</h2>
-            <p id="feedback"></p>
-        </div>
+    </div>
+    <div class="register-container">
+        <h2>Registrazione</h2>
+        <form id="register-form">
+            <div class="form-group">
+                <label for="register-username">Nome utente</label>
+                <input type="text" id="register-username" name="username" required autocomplete="username">
+            </div>
+            <div class="form-group">
+                <label for="register-password">Password</label>
+                <input type="password" id="register-password" name="password" required autocomplete="new-password">
+            </div>
+            <div class="form-group">
+                <label for="register-type">Tipo di utente</label>
+                <select id="register-type" name="type" required>
+                    <option value="user">Utente</option>
+                    <option value="manager">Manager</option>
+                </select>
+            </div>
+            <button type="submit">Registrati</button>
+        </form>
+    </div>
+    <div class="logout-container">
+        <h2>Logout</h2>
+        <form id="logout-form">
+            <button type="submit">Esci</button>
+        </form>
     </div>
 </body>
 </html>

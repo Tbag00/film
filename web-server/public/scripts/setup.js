@@ -1,10 +1,19 @@
-import { login } from "./buisness.js"; 
+import { login, createUser } from "./buisness.js"; 
 
+// Feedback
+const params = new URLSearchParams(window.location.search);
+const feedback_paragraph = document.getElementById("feedback");
+
+// Login form elements
 const form = document.getElementById("form");
 const username_input = document.getElementById("username");
 const password_input = document.getElementById("password");
-const params = new URLSearchParams(window.location.search);
-const feedback_paragraph = document.getElementById("feedback");
+
+// Register form elements
+const register_form = document.getElementById("register-form");
+const register_username = document.getElementById("register-username");
+const register_password = document.getElementById("register-password");
+const register_type = document.getElementById("register-type");
 
 function showError(error) {
     feedback_paragraph.textContent = error;
@@ -38,3 +47,22 @@ form.addEventListener("submit", async (event) => {
         showSuccess(res.message);
     }
 })
+
+register_form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const username = register_username.value;
+    const password = register_password.value;
+    const type = register_type.value;
+
+    if (!username || !password || !type) {
+        showError("All fields are required");
+        return;
+    }
+    const data = await createUser(username, password, type);
+    if (data.success === false) {
+        showError(data.error);
+    } else if (data.success) {
+        showSuccess("User created successfully");
+    }
+});

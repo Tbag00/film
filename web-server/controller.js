@@ -26,7 +26,7 @@ async function login(req, res) {
     try {
         const {username, password} = req.body;
         console.log(`ricevuto utente ${username} e password ${password}`);
-        const auth_response = await axios.post('http://auth:4000/api/login', {
+        const auth_response = await axios.post('http://auth-server:4000/api/login', {
             username,
             password
         });
@@ -84,7 +84,7 @@ async function verify_auth(req, res, next) {
     console.log("Ricevuto token:", token);
     console.log(req.cookies);
         try {
-            const auth_response = await axios.post("http://auth:4000/api/verify-token", {
+            const auth_response = await axios.post("http://auth-server:4000/api/verify-token", {
                 token: req.cookies.token,
                 withCredentials: true
             });
@@ -126,5 +126,32 @@ async function verify_manager_role(req, res, next) {
         return res.status(403).json({ error: "Accesso negato: utente non autorizzato" });
     }
     next();
+}
+
+async function create_user(req, res) {
+    const { username, password, type } = req.body;
+    console.log(`ricevuto utente ${username} e password ${password} di tipo ${type}`);
+
+    if (!username || !password || !type) {
+        return res.status(400).json({ success: false, message: "Missing required fields" });
+    }
+
+    try {
+        const auth_response = await axios.post('http://auth-server:4000/api/create-user', {
+            username,
+            password,
+            type
+        });
+        if (auth_response.data.success) {
+            console.log("User created successfully:", auth_response.data.userId);
+            return res.status(201).json({ success: true, userId: auth_response.data.userId });
+        } else {
+            console.error("User creation failed:", auth_response.data.message);
+            return res.status(400).json({ success: false, message: auth_response.data.message });
+    }
+    } catch (err) {
+        console.error("Database error during user creation", err);
+        return res.status(500).json({ success: false, message: "Internal server error" });
+    }
 }
 module.exports = { login, verify_auth, verify_manager_role, movieQueryHandler, logout};
