@@ -16,7 +16,7 @@ router.get('/movies', movieQueryHandler('SELECT title FROM movies'));
 router.get('/rooms', movieQueryHandler('SELECT name FROM rooms'));
 router.get('/screenings', movieQueryHandler('SELECT screenings.id as id, title, timecode, seats FROM screenings JOIN movies ON screenings.id_movie = movies.id'));
 router.get('/seats/:id', movieQueryHandler('SELECT * FROM screenings WHERE id = ?', true));
-router.get('/purchases/:id', movieQueryHandler('SELECT seats FROM purchases where id = ?', true));
+router.get('/purchases/:id', movieQueryHandler('SELECT seats FROM purchases where id_projection = ?', true));
 
 router.post('/login', login);
 router.get('/logout', logout);

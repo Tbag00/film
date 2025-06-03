@@ -2,7 +2,8 @@ const id = new URLSearchParams(location.search).get('id');
 let selectedSeats = [];
 
 async function loadSeats() {
-  const data = await fetch(`/api/seats/${id}`).then(r => r.json());
+  const arr = await fetch(`/api/seats/${id}`).then(r => r.json());
+  const data = arr[0];
   const filmList = await fetch(`/api/screenings`).then(r => r.json());
   const seatGrid = document.getElementById('seatGrid');
   const seatStatus = data.seats;
@@ -50,13 +51,13 @@ async function loadSeats() {
 document.getElementById('purchaseBtn').addEventListener('click', async () => {
 
   const response = await fetch(`/api/purchases/${id}`);
-  const existing = await response.json();
+  const data = await response.json();
+  const takenSeats = data.map(s => s.seats);
+  const stringArray = Array.from(selectedSeats, num => num.toString());
 
-  const takenSeats = existing.seats.split(',');
-  console.log(takenSeats);
-  const alreadyTaken = takenSeats.some(seat => selectedSeats.includes(seat));
-  console.log(alreadyTaken);
-  if (alreadyTaken) {
+  const hasOverlap = stringArray.some(el => takenSeats.includes(el));
+
+  if (hasOverlap) {
     alert('Uno o più posti selezionati sono già stati acquistati.');
     return;
   }
@@ -67,11 +68,11 @@ document.getElementById('purchaseBtn').addEventListener('click', async () => {
     body: JSON.stringify({
       id_projection: id,
       seats: selectedSeats,
-      user_id: 'fakeUser', // temporaneo
+      user_id: 'fakeUser',
     })
   });
 
-  window.location.href = '/booking_manager.html?confirm';
+  window.location.href = '/private/booking_manager.html?confirm';
 });
 
 loadSeats();

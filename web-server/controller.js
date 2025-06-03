@@ -14,7 +14,7 @@ function movieQueryHandler(query, byId = false) {
       if (byId && rows.length === 0)
         return res.status(404).json({ error: 'Elemento non trovato' });
 
-      res.json(byId ? rows[0] : rows);
+      res.json(rows);
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: 'Errore DB' });
